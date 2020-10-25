@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { FC, useEffect } from "react";
 
-function App() {
-  return (<p>Hello!</p>
-  );
-}
+export const App: FC = () => {
 
-export default App;
+
+  return <p>Hello!</p>;
+};

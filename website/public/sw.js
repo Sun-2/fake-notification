@@ -1,0 +1,1 @@
+/* An empty ServiceWorker is enough to show notifications. */
