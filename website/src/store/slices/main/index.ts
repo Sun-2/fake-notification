@@ -8,6 +8,7 @@ export type ServiceWorkerStatus =
 
 const initialState = {
   serviceWorkerStatus: "loading" as ServiceWorkerStatus,
+  showRequestNotificationPermissionView: false,
 };
 
 export type MainSlice = typeof initialState;
@@ -21,6 +22,12 @@ export const main = createSlice({
       action: PayloadAction<ServiceWorkerStatus>
     ) => {
       state.serviceWorkerStatus = action.payload;
+    },
+    setShowRequestNotificationPermissionView: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.showRequestNotificationPermissionView = action.payload;
     },
   },
 });

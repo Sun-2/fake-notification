@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 import facebook from "../../../../assets/mediaIcons/facebook.svg";
 import instagram from "../../../../assets/mediaIcons/instagram.svg";
@@ -7,6 +7,7 @@ import twitter from "../../../../assets/mediaIcons/twitter.svg";
 import { SupportedMedia } from "../../../../supportedMedia";
 import { useAppDispatch } from "../../../../store/useAppDispatch";
 import { pushNotification } from "../../../../store/serviceWorker/actions";
+import {Button, ButtonBase, CircularProgress, Fade} from "@material-ui/core";
 
 const srcMapping = {
   facebook,
@@ -20,24 +21,47 @@ export type MediaButtonProps = {
 };
 
 export const MediaButton: FC<MediaButtonProps> = (props) => {
-  const { ...rest } = props;
   const dispatch = useAppDispatch();
 
   const onClick = () => dispatch(pushNotification(props.media));
 
   const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <Root onClick={onClick}>
-      <Div>
+      <SButton>
         <img
-          onLoad={() => console.log("loaded")}
+          onLoad={() => setIsLoaded(true)}
           src={srcMapping[props.media as keyof typeof srcMapping]}
           alt={props.media}
+          style={{ visibility: isLoaded ? "inherit" : "hidden" }}
         />
-      </Div>
+        <Fade in={!isLoaded}>
+          <ProgressWrapper>
+            <SCircularProgress />
+          </ProgressWrapper>
+        </Fade>
+      </SButton>
     </Root>
   );
 };
+
+const ProgressWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+`;
+
+const SCircularProgress = styled(CircularProgress)`
+  width: 45% !important;
+  height: 45% !important;
+`;
 
 const Root = styled.div`
   padding-top: 100%;
@@ -52,8 +76,9 @@ const Root = styled.div`
   position: relative;
 `;
 
-const Div = styled.div`
+const SButton = styled(Button)`
   border: 4px dashed black;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;

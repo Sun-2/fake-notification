@@ -2,14 +2,13 @@ import React, { FC } from "react";
 import { supportedMedia } from "../../supportedMedia";
 import { MediaButton } from "./components/MediaButton";
 import styled from "styled-components";
-import { media } from "../../styles/media";
 
 export const MediaGrid: FC = () => {
   return (
     <Root>
       <Grid>
         {supportedMedia.map((media) => (
-          <MediaButton media={media} />
+          <MediaButton key={media} media={media} />
         ))}
       </Grid>
     </Root>
@@ -31,6 +30,4 @@ const Grid = styled.div`
   padding: ${({ theme }) => theme.spacing(2)}px;
   max-width: 966px;
   width: 100%;
-
-
 `;
