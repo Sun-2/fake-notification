@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { main } from "./slices/main";
 import createSagaMiddleware from "redux-saga";
 import { all, call, spawn } from "redux-saga/effects";
-import { swSaga } from "./slices/main/swSaga";
+import { saga as serviceWorkerRootSaga } from "./serviceWorker/saga";
 
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
@@ -16,7 +16,7 @@ export const store = configureStore({
 });
 
 function* rootSaga() {
-  const sagas = [swSaga];
+  const sagas = [serviceWorkerRootSaga];
 
   yield all(
     sagas.map((saga) =>

@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type ServiceWorkerStatus = "loading" | "error" | "ready";
+export type ServiceWorkerStatus =
+  | "loading"
+  | "not-supported"
+  | "ready"
+  | "no-permission";
 
 const initialState = {
   serviceWorkerStatus: "loading" as ServiceWorkerStatus,
