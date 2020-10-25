@@ -10,21 +10,27 @@ import {
 import { pushNotification } from "./actions";
 import snapchatBadge from "../../assets/notificationBadges/snapchat.png";
 import instagramBadge from "../../assets/notificationBadges/instagram.png";
+import facebookBadge from "../../assets/notificationBadges/facebook.png";
 
 function* notificationRequestWatcher(
   registration: ServiceWorkerRegistration,
   action: ReturnType<typeof pushNotification>
 ) {
   switch (action.payload) {
-    case "Instagram":
+    case "instagram":
       return registration.showNotification("Instagram", {
         icon: instagramBadge,
         badge: instagramBadge,
       });
-    case "Snapchat":
+    case "snapchat":
       return registration.showNotification("Snapchat", {
         icon: snapchatBadge,
         badge: snapchatBadge,
+      });
+    case "facebook":
+      return registration.showNotification("Facebook", {
+        icon: facebookBadge,
+        badge: facebookBadge,
       });
   }
 }

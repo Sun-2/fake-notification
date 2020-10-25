@@ -1,11 +1,6 @@
-import React, { FC, useEffect } from "react";
-import { useAppDispatch } from "./store/useAppDispatch";
-import { pushNotification } from "./store/serviceWorker/actions";
+import React, { FC } from "react";
+import { MediaGrid } from "./components/MediaGrid";
 
 export const App: FC = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(pushNotification("Snapchat"));
-  }, []);
-  return <p>Hello!</p>;
+  return <MediaGrid />;
 };

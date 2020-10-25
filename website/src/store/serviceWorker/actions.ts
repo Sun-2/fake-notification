@@ -1,4 +1,6 @@
-import {createAction} from "@reduxjs/toolkit";
-import {SupportedApp} from "../../SupportedApp";
+import { createAction } from "@reduxjs/toolkit";
+import { SupportedMedia } from "../../supportedMedia";
 
-export const pushNotification = createAction<SupportedApp>("make-notification");
+export const pushNotification = createAction<SupportedMedia>(
+  "make-notification"
+);
