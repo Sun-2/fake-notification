@@ -10,7 +10,7 @@ export const NoNotificationPermission = () => {
         Looks like notifications are disabled for{" "}
         <SiteName>{window.location.hostname}</SiteName>.
       </Typography>
-
+      <br />
       <Typography align="center">
         Please enable them in your browser settings and refresh the page.
       </Typography>
