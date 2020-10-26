@@ -6,10 +6,11 @@ import snapchat from "../../../../assets/mediaIcons/snapchat.svg";
 import twitter from "../../../../assets/mediaIcons/twitter.svg";
 import { SupportedMedia } from "../../../../supportedMedia";
 import { useAppDispatch } from "../../../../store/useAppDispatch";
-import { pushNotification } from "../../../../store/serviceWorker/actions";
-import {Button, ButtonBase, CircularProgress, Fade} from "@material-ui/core";
+import { pushNotification } from "../../../../store/slices/notifications/actions";
+import { Button, ButtonBase, CircularProgress, Fade } from "@material-ui/core";
+import { media } from "../../../../styles/media";
 
-const srcMapping = {
+const srcMapping: {[key in SupportedMedia]:string}= {
   facebook,
   instagram,
   snapchat,
@@ -30,7 +31,7 @@ export const MediaButton: FC<MediaButtonProps> = (props) => {
   return (
     <Root onClick={onClick}>
       <SButton>
-        <img
+        <SImg
           onLoad={() => setIsLoaded(true)}
           src={srcMapping[props.media as keyof typeof srcMapping]}
           alt={props.media}
@@ -78,6 +79,11 @@ const Root = styled.div`
 
 const SButton = styled(Button)`
   border: 4px dashed black;
+
+  ${media.sm} {
+    border-width: 8px;
+  }
+
   width: 100%;
   top: 0;
   left: 0;
@@ -85,4 +91,8 @@ const SButton = styled(Button)`
   bottom: 0;
   padding: 8%;
   position: absolute;
+`;
+
+const SImg = styled.img`
+  width: 100%;
 `;

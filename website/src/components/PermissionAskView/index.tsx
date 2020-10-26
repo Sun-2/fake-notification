@@ -1,24 +1,17 @@
 import {
   Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardHeader,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Paper,
 } from "@material-ui/core";
 import React, { FC, useCallback } from "react";
 import { useAppDispatch } from "../../store/useAppDispatch";
-import { requestNotificationPermission } from "../../store/serviceWorker/actions";
-import styled from "styled-components";
+import { requestNotificationPermission } from "../../store/slices/notifications/actions";
 import { useSelector } from "react-redux";
-import { getShowRequestNotificationPermissionView } from "../../store/slices/main/selectors";
-import {main} from "../../store/slices/main";
+import { notifications } from "../../store/slices/notifications/slice";
+import { getShowRequestNotificationPermissionView } from "../../store/slices/notifications/selectors";
 
 export const PermissionAskView: FC = (props) => {
   const show = useSelector(getShowRequestNotificationPermissionView);
@@ -26,8 +19,11 @@ export const PermissionAskView: FC = (props) => {
   const dispatch = useAppDispatch();
   const onClick = useCallback(() => {
     dispatch(requestNotificationPermission());
-    dispatch(main.actions.setShowRequestNotificationPermissionView(false));
+    dispatch(
+      notifications.actions.setShowRequestNotificationPermissionView(false)
+    );
   }, []);
+
   return (
     <Dialog open={show}>
       <DialogTitle>Notification request</DialogTitle>

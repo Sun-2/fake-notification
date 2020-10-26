@@ -1,4 +1,3 @@
-import { main } from "../slices/main";
 import {
   actionChannel,
   call,
@@ -8,36 +7,42 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { pushNotification, requestNotificationPermission } from "./actions";
-import snapchatBadge from "../../assets/notificationBadges/snapchat.png";
-import instagramBadge from "../../assets/notificationBadges/instagram2.png";
-import facebookBadge from "../../assets/notificationBadges/facebook.png";
+import snapchatBadge from "../../../assets/notificationBadges/snapchat.png";
+import instagramBadge from "../../../assets/notificationBadges/instagram2.png";
+import facebookBadge from "../../../assets/notificationBadges/facebook.png";
+import twitterBadge from "../../../assets/notificationBadges/twitter.png";
+import { SupportedMedia } from "../../../supportedMedia";
+import { notifications } from "./slice";
 
-const badgeMappings = {
+const badgeMappings: Record<SupportedMedia, string> = {
   instagram: instagramBadge,
   facebook: facebookBadge,
   snapchat: snapchatBadge,
-} as const;
+  twitter: twitterBadge,
+};
 
 function* notificationRequestWatcher(
   registration: ServiceWorkerRegistration,
   action: ReturnType<typeof pushNotification>
 ) {
   if (Notification.permission === "default") {
-    /* todo ask for notification permission */
-    yield put(main.actions.setShowRequestNotificationPermissionView(true));
+    yield put(
+      notifications.actions.setShowRequestNotificationPermissionView(true)
+    );
     yield take(requestNotificationPermission.type);
     yield call([Notification, Notification.requestPermission]);
   }
   if (Notification.permission === "denied") {
-    /* todo display no permission notification */
-    return yield put(main.actions.setServiceWorkerStatus("no-permission"));
+    return yield put(notifications.actions.setNotificationPermission("denied"));
   }
 
+  const iconSrc = badgeMappings[action.payload];
   return yield call(
     [registration, registration.showNotification],
-    "Instagram",
+    action.payload,
     {
-      badge: badgeMappings[action.payload as keyof typeof badgeMappings],
+      badge: iconSrc,
+      icon: iconSrc,
     }
   );
 }
@@ -46,10 +51,14 @@ export function* saga() {
   const notificationRequestChannel = yield actionChannel(pushNotification.type);
   try {
     if (!("serviceWorker" in navigator))
-      return yield put(main.actions.setServiceWorkerStatus("not-supported"));
+      return yield put(
+        notifications.actions.setServiceWorkerStatus("not-supported")
+      );
 
     if (Notification.permission === "denied")
-      return yield put(main.actions.setServiceWorkerStatus("no-permission"));
+      return yield put(
+        notifications.actions.setNotificationPermission("denied")
+      );
 
     const registration = yield call(
       [navigator.serviceWorker, navigator.serviceWorker.register],
@@ -64,8 +73,10 @@ export function* saga() {
       );
     });
 
-    yield put(main.actions.setServiceWorkerStatus("ready"));
+    yield put(notifications.actions.setServiceWorkerStatus("ready"));
   } catch (e) {
-    return yield put(main.actions.setServiceWorkerStatus("not-supported"));
+    return yield put(
+      notifications.actions.setServiceWorkerStatus("not-supported")
+    );
   }
 }
