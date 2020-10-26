@@ -58,12 +58,10 @@ export function* saga() {
         notifications.actions.setServiceWorkerStatus("not-supported")
       );
 
-    if (Notification.permission === "denied") {
-      yield delay(1000);
-      yield put(push("/sw-not-supported"));
-      yield put(notifications.actions.setNotificationPermission("denied"));
-      return;
-    }
+    if (Notification.permission === "denied")
+      return yield put(
+        notifications.actions.setNotificationPermission("denied")
+      );
 
     const registration = yield call(
       [navigator.serviceWorker, navigator.serviceWorker.register],

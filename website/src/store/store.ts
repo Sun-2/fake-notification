@@ -1,5 +1,4 @@
 import { CaseReducer, configureStore } from "@reduxjs/toolkit";
-import { main } from "./slices/main";
 import createSagaMiddleware from "redux-saga";
 import {all, call, delay, put, spawn} from "redux-saga/effects";
 import { saga as serviceWorkerRootSaga } from "./slices/notifications/saga";
@@ -18,7 +17,6 @@ const sagaMiddleware = createSagaMiddleware();
 export const history = createBrowserHistory();
 
 const reducer = {
-  [main.name]: main.reducer,
   [notifications.name]: notifications.reducer,
   router: connectRouter(history) as any,
 };

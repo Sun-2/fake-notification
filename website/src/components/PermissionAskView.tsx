@@ -7,11 +7,11 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import React, { FC, useCallback } from "react";
-import { useAppDispatch } from "../../store/useAppDispatch";
-import { requestNotificationPermission } from "../../store/slices/notifications/actions";
+import { useAppDispatch } from "../store/useAppDispatch";
+import { requestNotificationPermission } from "../store/slices/notifications/actions";
 import { useSelector } from "react-redux";
-import { notifications } from "../../store/slices/notifications/slice";
-import { getShowRequestNotificationPermissionView } from "../../store/slices/notifications/selectors";
+import { notifications } from "../store/slices/notifications/slice";
+import { getShowRequestNotificationPermissionView } from "../store/slices/notifications/selectors";
 
 export const PermissionAskView: FC = (props) => {
   const show = useSelector(getShowRequestNotificationPermissionView);
@@ -25,7 +25,7 @@ export const PermissionAskView: FC = (props) => {
   }, []);
 
   return (
-    <Dialog open={show}>
+    <Dialog {...props} open={show}>
       <DialogTitle>Notification request</DialogTitle>
 
       <DialogContent>

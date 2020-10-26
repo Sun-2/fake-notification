@@ -14,7 +14,7 @@ const SFooter = styled.footer`
   background-color: ${({ theme }) => theme.palette.primary.main};
   color: white;
   width: 100%;
-  padding: ${({ theme }) => theme.spacing(3)}px
+  padding: ${({ theme }) => theme.spacing(1)}px
     ${({ theme }) => theme.spacing(3)}px;
   display: flex;
   justify-content: space-around;

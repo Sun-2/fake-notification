@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { supportedMedia } from "../../../../supportedMedia";
 import { MediaButton } from "./components/MediaButton";
 import styled from "styled-components";
-import { ViewOnGithub } from "../../../Footer/components/ViewOnGithub";
+
 
 export const MediaGrid: FC = () => {
   return (
