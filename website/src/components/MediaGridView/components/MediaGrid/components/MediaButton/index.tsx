@@ -7,7 +7,7 @@ import twitter from "../../../../../../assets/mediaIcons/twitter.svg";
 import { SupportedMedia } from "../../../../../../supportedMedia";
 import { useAppDispatch } from "../../../../../../store/useAppDispatch";
 import { pushNotification } from "../../../../../../store/slices/notifications/actions";
-import { Button, ButtonBase, CircularProgress, Fade } from "@material-ui/core";
+import { Button, CircularProgress, Fade } from "@material-ui/core";
 import { media } from "../../../../../../styles/media";
 
 const srcMapping: { [key in SupportedMedia]: string } = {
@@ -67,7 +67,6 @@ const SCircularProgress = styled(CircularProgress)`
 const Root = styled.div`
   padding-top: 100%;
   width: 100%;
-
 
   transition: transform 0.1s ease-out;
   &:active {

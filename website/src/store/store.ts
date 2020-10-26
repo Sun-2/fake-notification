@@ -1,23 +1,33 @@
 import { CaseReducer, configureStore } from "@reduxjs/toolkit";
 import { main } from "./slices/main";
 import createSagaMiddleware from "redux-saga";
-import { all, call, spawn } from "redux-saga/effects";
+import {all, call, delay, put, spawn} from "redux-saga/effects";
 import { saga as serviceWorkerRootSaga } from "./slices/notifications/saga";
 import { RootState } from "./type";
 import { notifications } from "./slices/notifications/slice";
 import { Reducer } from "react";
+import { createBrowserHistory } from "history";
+import {
+  connectRouter, push,
+  routerMiddleware,
+  RouterState,
+} from "connected-react-router";
 
 const sagaMiddleware = createSagaMiddleware();
+
+export const history = createBrowserHistory();
 
 const reducer = {
   [main.name]: main.reducer,
   [notifications.name]: notifications.reducer,
+  router: connectRouter(history) as any,
 };
 export const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) => [
-    ...getDefaultMiddleware(),
     sagaMiddleware,
+    routerMiddleware(history),
+    ...getDefaultMiddleware(),
   ],
 });
 

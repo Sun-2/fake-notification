@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { MediaGrid } from "./components/MediaGridView/components/MediaGrid";
 import { useSelector } from "react-redux";
 import {
   getNotificationPermission,
@@ -8,30 +7,27 @@ import {
 import { PermissionAskView } from "./components/PermissionAskView";
 import { MediaGridView } from "./components/MediaGridView";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { mediaGridViewRoute } from "./components/MediaGridView/route";
+import { noNotificationPermissionRoute } from "./components/NoNotificationPermission/route";
+import { swNotSupportedRoute } from "./components/SwNotSupported/route";
+import { SwNotSupported } from "./components/SwNotSupported";
+import { NoNotificationPermission } from "./components/NoNotificationPermission";
 
 export const App: FC = () => {
-  const serviceWorkerStatus = useSelector(getServiceWorkerStatus);
-  const notificationPermission = useSelector(getNotificationPermission);
-
-  if (
-    notificationPermission !== "denied" &&
-    serviceWorkerStatus !== "not-supported"
-  ) {
-    return (
-      <Router>
-        <PermissionAskView />
-        <Switch>
-          <Route path={"sw-not-supported"}>
-            <p>sw not supported</p>
-          </Route>
-          <Route path={"notifications-error"}>
-            <p>notifications error</p>
-          </Route>
-          <Route>
-            <MediaGridView />
-          </Route>
-        </Switch>
-      </Router>
-    );
-  } else return <p>Something went wrong</p>;
+  return (
+    <>
+      <PermissionAskView />
+      <Switch>
+        <Route path={`/${swNotSupportedRoute}`}>
+          <SwNotSupported />
+        </Route>
+        <Route path={`/${noNotificationPermissionRoute}`}>
+          <NoNotificationPermission />
+        </Route>
+        <Route path={`/${mediaGridViewRoute}`}>
+          <MediaGridView />
+        </Route>
+      </Switch>
+    </>
+  );
 };

@@ -1,6 +1,7 @@
 import {
   actionChannel,
   call,
+  delay,
   fork,
   put,
   take,
@@ -13,6 +14,8 @@ import facebookBadge from "../../../assets/notificationBadges/facebook.png";
 import twitterBadge from "../../../assets/notificationBadges/twitter.png";
 import { SupportedMedia } from "../../../supportedMedia";
 import { notifications } from "./slice";
+import { push } from "connected-react-router";
+import { history } from "../../store";
 
 const badgeMappings: Record<SupportedMedia, string> = {
   instagram: instagramBadge,
@@ -55,10 +58,12 @@ export function* saga() {
         notifications.actions.setServiceWorkerStatus("not-supported")
       );
 
-    if (Notification.permission === "denied")
-      return yield put(
-        notifications.actions.setNotificationPermission("denied")
-      );
+    if (Notification.permission === "denied") {
+      yield delay(1000);
+      yield put(push("/sw-not-supported"));
+      yield put(notifications.actions.setNotificationPermission("denied"));
+      return;
+    }
 
     const registration = yield call(
       [navigator.serviceWorker, navigator.serviceWorker.register],

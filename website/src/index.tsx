@@ -8,17 +8,21 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./styles/GlobalStyles";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "./store/store";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <CssBaseline />
-          <App />
-        </ThemeProvider>
-      </MuiThemeProvider>
+      <ConnectedRouter history={history}>
+        <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
+        </MuiThemeProvider>
+      </ConnectedRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
