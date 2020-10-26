@@ -6,7 +6,13 @@ export type AppTheme = typeof theme;
 
 export const theme = createMuiTheme({
   palette: {
-    primary: grey,
+    primary: {
+      main: "#151515",
+    },
+  },
+  typography: {
+    htmlFontSize: 10,
+
   },
 });
 

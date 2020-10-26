@@ -1,16 +1,16 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
-import facebook from "../../../../assets/mediaIcons/facebook.svg";
-import instagram from "../../../../assets/mediaIcons/instagram.svg";
-import snapchat from "../../../../assets/mediaIcons/snapchat.svg";
-import twitter from "../../../../assets/mediaIcons/twitter.svg";
-import { SupportedMedia } from "../../../../supportedMedia";
-import { useAppDispatch } from "../../../../store/useAppDispatch";
-import { pushNotification } from "../../../../store/slices/notifications/actions";
+import facebook from "../../../../../../assets/mediaIcons/facebook.svg";
+import instagram from "../../../../../../assets/mediaIcons/instagram.svg";
+import snapchat from "../../../../../../assets/mediaIcons/snapchat.svg";
+import twitter from "../../../../../../assets/mediaIcons/twitter.svg";
+import { SupportedMedia } from "../../../../../../supportedMedia";
+import { useAppDispatch } from "../../../../../../store/useAppDispatch";
+import { pushNotification } from "../../../../../../store/slices/notifications/actions";
 import { Button, ButtonBase, CircularProgress, Fade } from "@material-ui/core";
-import { media } from "../../../../styles/media";
+import { media } from "../../../../../../styles/media";
 
-const srcMapping: {[key in SupportedMedia]:string}= {
+const srcMapping: { [key in SupportedMedia]: string } = {
   facebook,
   instagram,
   snapchat,
@@ -67,8 +67,7 @@ const SCircularProgress = styled(CircularProgress)`
 const Root = styled.div`
   padding-top: 100%;
   width: 100%;
-  align-self: stretch;
-  justify-self: stretch;
+
 
   transition: transform 0.1s ease-out;
   &:active {
@@ -78,7 +77,7 @@ const Root = styled.div`
 `;
 
 const SButton = styled(Button)`
-  border: 4px dashed black;
+  border: 4px dashed ${({ theme }) => theme.palette.primary.main};
 
   ${media.sm} {
     border-width: 8px;

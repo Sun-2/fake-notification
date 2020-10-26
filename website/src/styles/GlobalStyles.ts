@@ -8,12 +8,19 @@ export const GlobalStyles = createGlobalStyle`
     flex-direction: column;
   }
   
+  html {
+    height: 100%;
+  }
+  
   #root {
     flex-grow: 1;  
   }
   
+  html {
+    font-size: calc(10 / 16 * 100%);
+  }
   body {
-    
+    font-size: calc(16 / 10 * 100%);
   }
   
   img {
